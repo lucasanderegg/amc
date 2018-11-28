@@ -10,6 +10,8 @@ import { ContactsListComponent } from './contacts-list/contacts-list.component';
 import { APP_ROUTES } from './app.routes';
 import { RouterModule } from '@angular/router';
 import { ContactsDetailComponent } from './contacts-detail/contacts-detail.component';
+import { HttpClientModule } from '@angular/common/http';
+import { API_ENDPOINT } from './app.tokens';
 
 
 @NgModule({
@@ -19,9 +21,13 @@ import { ContactsDetailComponent } from './contacts-detail/contacts-detail.compo
     BrowserAnimationsModule,
     ContactsMaterialModule,
     FlexLayoutModule,
-    RouterModule.forRoot(APP_ROUTES)
+    RouterModule.forRoot(APP_ROUTES),
+    HttpClientModule
   ],
-  providers:[ContactsService],
+  providers:[
+    ContactsService,
+    {provide: API_ENDPOINT, useValue: 'http://localhost:4201/api/'}
+  ],
   bootstrap: [ContactsAppComponent]
 })
 export class ContactsModule {
