@@ -21,6 +21,9 @@
         <dd>{{contact?.address?.city || '-'}}</dd>
       </dl>
     </mat-card-content>
+    <mat-card-actions fxLayout fxLayoutAlign="center left">
+      <a mat-button [routerLink]="['/contact/', contact?.id || '', 'edit']" title="edit">Edit</a>
+    </mat-card-actions>
     <mat-card-actions fxLayout fxLayoutAlign="center center">
       <a mat-button [routerLink]="['/']" title="Go back to list">Go Back</a>
     </mat-card-actions>

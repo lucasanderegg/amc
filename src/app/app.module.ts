@@ -12,17 +12,20 @@ import { RouterModule } from '@angular/router';
 import { ContactsDetailComponent } from './contacts-detail/contacts-detail.component';
 import { HttpClientModule } from '@angular/common/http';
 import { API_ENDPOINT } from './app.tokens';
+import { FormsModule } from '@angular/forms';
+import { ContactsEditorComponent } from './contacts-editor/contacts-editor.component';
 
 
 @NgModule({
-  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailComponent],
+  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailComponent, ContactsEditorComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ContactsMaterialModule,
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers:[
     ContactsService,
