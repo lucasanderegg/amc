@@ -6,6 +6,9 @@ import { Contact } from '../models/contact';
   providedIn: 'root'
 })
 export class ContactsService {
+  getContact(id: any): Contact {
+    return this.getContacts().find(contact => contact.id.toString() === id);
+  }
 
   constructor() { }
 
