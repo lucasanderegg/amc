@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../models/contact';
 import { ContactsService } from '../services/contacts.service';
-import { Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { Observable, Subject, merge } from 'rxjs';
+import { distinctUntilChanged, debounceTime, switchMap, map, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'trm-contacts-list',
@@ -16,15 +16,21 @@ export class ContactsListComponent implements OnInit {
   constructor(private contactsService: ContactsService) { }
 
   public ngOnInit(){
-    this.contacts = this.contactsService.getContacts();
-    this.terms$.pipe(
+    const searchResult = this.terms$.pipe(
       debounceTime(400),
-      distinctUntilChanged()
-    ).subscribe(term => this.search(term))
-  }
+      distinctUntilChanged(),
+      switchMap((term) => this.contactsService.search(term)
+      )
+    )
 
-  search(nameToSearch){
-    this.contacts = this.contactsService.search(nameToSearch);
+    this.contacts = merge(
+      searchResult, 
+      // takeUntil unsubscribes von getContacts sobald beim subject terms ein neuer wert ankommt
+      // man kann in einem ngOnDestroy ein next auf einem eigenen subject machen und im call
+      // auf service/observabel takeUntil( destroySubject) 
+      // so wird der oberservable sicher immer unsubscribed
+      this.contactsService.getContacts().pipe(takeUntil(this.terms$))
+      )
   }
 
 }
