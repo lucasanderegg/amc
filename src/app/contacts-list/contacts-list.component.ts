@@ -16,9 +16,14 @@ export class ContactsListComponent implements OnInit {
   constructor(private contactsService: ContactsService) { }
 
   public ngOnInit(){
+    // pipe returns the return value of the last method/function
+    // because switchmap is like a map and mapps data and returns the data 
+    // we have searchResult as Observable of Contacts
     const searchResult = this.terms$.pipe(
       debounceTime(400),
       distinctUntilChanged(),
+      // switchMap macht das wenn es eien neuen term gibt contactservice neu angesprochen wird
+      // und das die vorherhige subscribtion aufgelöst wird
       switchMap((term) => this.contactsService.search(term)
       )
     )
