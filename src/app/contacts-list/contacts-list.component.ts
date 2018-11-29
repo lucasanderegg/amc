@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../models/contact';
 import { ContactsService } from '../services/contacts.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'trm-contacts-list',
@@ -10,11 +11,20 @@ import { Observable } from 'rxjs';
 })
 export class ContactsListComponent implements OnInit {
   contacts: Observable<Array<Contact>> = {} as Observable<Array<Contact>>;
-  
+  terms$ = new Subject<string>();
+
   constructor(private contactsService: ContactsService) { }
 
   public ngOnInit(){
     this.contacts = this.contactsService.getContacts();
+    this.terms$.pipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    ).subscribe(term => this.search(term))
+  }
+
+  search(nameToSearch){
+    this.contacts = this.contactsService.search(nameToSearch);
   }
 
 }
