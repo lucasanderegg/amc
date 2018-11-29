@@ -1,6 +1,6 @@
 <mat-list>
   <a mat-list-item [routerLink]="['/contact', contact?.id || '']"
-  *ngFor="let contact of contacts">
+  *ngFor="let contact of contacts | async">
     <img mat-list-avatar [src]="contact?.image || ''">
     <h3 mat-line>{{contact?.name || '-'}}</h3>
   </a>
