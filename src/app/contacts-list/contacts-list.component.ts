@@ -31,9 +31,11 @@ export class ContactsListComponent implements OnInit {
     this.contacts = merge(
       searchResult, 
       // takeUntil unsubscribes von getContacts sobald beim subject terms ein neuer wert ankommt
+      // mit neuer wert ist wohl nicht ein neuer suchwert sonder eine antwort search api request
       // man kann in einem ngOnDestroy ein next auf einem eigenen subject machen und im call
       // auf service/observabel takeUntil( destroySubject) 
       // so wird der oberservable sicher immer unsubscribed
+      // takeUntil stopt/unsubscribed von getContacts wenn der search request von antwortet
       this.contactsService.getContacts().pipe(takeUntil(this.terms$))
       )
   }

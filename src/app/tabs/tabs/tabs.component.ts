@@ -15,6 +15,9 @@ export class TabsComponent implements AfterContentInit {
   }
 
   ngAfterContentInit() {
+    // loose coupling
+    // vorher als die tab componenten sich selber der tabs componente bekannt machen musste
+    // hatten wir eine stärkere kopplung
     this.tabs.first.selected = true
   }
 
