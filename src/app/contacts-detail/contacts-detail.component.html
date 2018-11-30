@@ -22,11 +22,7 @@
       </dl>
     </mat-card-content>
     <mat-card-actions fxLayout fxLayoutAlign="center left">
-        <button (click)="edit.emit(contact)">Edit</button>
-    </mat-card-actions>
-    <mat-card-actions fxLayout fxLayoutAlign="center center">
-        <button (click)="back.emit(contact)">Go Back</button>
-      <!-- <a mat-button [routerLink]="['/']" title="Go back to list">Go Back</a> -->
+        <button mat-button (click)="edit.emit(contact)">Edit</button>
     </mat-card-actions>
   </mat-card>
   <ng-template #loading>Loading...</ng-template>

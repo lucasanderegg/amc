@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Contact } from '../models/contact';
 import { Observable } from 'rxjs';
 import { ContactsService } from '../services/contacts.service';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, switchMap } from 'rxjs/operators';
 import { EventBusService } from '../services/event-bus.service';
 import { ObserversModule } from '@angular/cdk/observers';
 
@@ -16,24 +16,19 @@ export class ContactsDetailViewComponent implements OnInit {
   contact$: Observable<Contact>
 
   constructor(private route: ActivatedRoute, private router: Router,
-     private contactsService: ContactsService, private eventBus: EventBusService) { }
+    private contactsService: ContactsService, private eventBus: EventBusService) { }
 
   ngOnInit() {
-    let id = this.route.snapshot.params['id'];
-    this.contact$ = this.contactsService.getContact(id).pipe(
-      tap( contact => {
-        if(contact != null && contact.name != null)
-         this.eventBus.emit('appTitleChange', contact.name) 
-        } )
+    this.contact$ = this.route.params.pipe(
+      switchMap((params: Params) => this.contactsService.getContact(params['id'])),
+      tap(contact => {
+        if (contact != null && contact.name != null)
+          this.eventBus.emit('appTitleChange', contact.name)
+      })
     );
   }
 
-  navigateToEditor(contact: Contact){
-    this.router.navigate(['/contact/', contact.id , 'edit'])
-  }
-
-  navigateToList(){
-    this.router.navigate(['/'])
-
+  navigateToEditor(contact: Contact) {
+    this.router.navigate(['/contact/', contact.id, 'edit'])
   }
 }
