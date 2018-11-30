@@ -38,10 +38,9 @@ import { ContactsResolver } from './shared/contacts.resolver';
     ContactsService,
     {provide: API_ENDPOINT, useValue: 'http://localhost:4201/api/'},
     EventBusService,
-    ContactsResolver
+    ContactsResolver,
     { provide: 'ConfirmNavigationGuard', useValue: doConfirm },
-    // { provide: 'ContactsResolver', useValue: ContactsResolver },
-  ],
+    ],
   bootstrap: [ContactsAppComponent]
 })
 export class ContactsModule {

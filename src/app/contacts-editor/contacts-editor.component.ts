@@ -11,25 +11,19 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./contacts-editor.component.css']
 })
 export class ContactsEditorComponent implements OnInit {
-  contact: Contact = <Contact>{ address: {}};
+  contact: Contact;
   warnOnClosing = true;
 
   constructor(private contactsService: ContactsService, private route: ActivatedRoute,
     private router: Router, private eventBus: EventBusService) { }
 
   ngOnInit() {
-    // let id = this.route.snapshot.params['id'];
     this.route.data
     .pipe(map(data => data['contact']))
     .subscribe(contact => {
       this.contact = contact;
       this.eventBus.emit('appTitleChange', `Editing:  ${this.contact.name}`);
     });
-    
-    // this.contactsService.getContact(id).toPromise().then( item => {
-    //   this.contact = item;
-    //   this.eventBus.emit('appTitleChange', `Editing:  ${this.contact.name}`);
-    // })
   }
 
   save(contact){
