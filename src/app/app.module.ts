@@ -17,6 +17,7 @@ import { ContactsEditorComponent } from './contacts-editor/contacts-editor.compo
 import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-detail-view.component';
 import { TabComponent } from './tabs/tab/tab.component';
 import { TabsComponent } from './tabs/tabs/tabs.component';
+import { EventBusService } from './services/event-bus.service';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { TabsComponent } from './tabs/tabs/tabs.component';
   ],
   providers:[
     ContactsService,
-    {provide: API_ENDPOINT, useValue: 'http://localhost:4201/api/'}
+    {provide: API_ENDPOINT, useValue: 'http://localhost:4201/api/'},
+    EventBusService
   ],
   bootstrap: [ContactsAppComponent]
 })

@@ -4,6 +4,7 @@ import { Contact } from '../models/contact';
 import { Observable } from 'rxjs';
 import { ContactsService } from '../services/contacts.service';
 import { map } from 'rxjs/operators';
+import { EventBusService } from '../services/event-bus.service';
 
 @Component({
   selector: 'trm-contacts-detail-view',
@@ -14,11 +15,16 @@ export class ContactsDetailViewComponent implements OnInit {
   contact$: Observable<Contact>
 
   constructor(private route: ActivatedRoute, private router: Router,
-     private contactsService: ContactsService) { }
+     private contactsService: ContactsService, private eventBus: EventBusService) { }
 
   ngOnInit() {
     let id = this.route.snapshot.params['id'];
     this.contact$ = this.contactsService.getContact(id);
+
+    this.contact$.subscribe((contact) => {
+      if(contact != null && contact.name != null)
+       this.eventBus.emit('appTitleChange', contact.name) 
+      });
   }
 
   navigateToEditor(contact: Contact){
