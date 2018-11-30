@@ -36,10 +36,16 @@ import { AboutComponent } from './about/about.component';
   providers:[
     ContactsService,
     {provide: API_ENDPOINT, useValue: 'http://localhost:4201/api/'},
-    EventBusService
+    EventBusService,
+    { provide: 'ConfirmNavigationGuard', useValue: doConfirm }
   ],
   bootstrap: [ContactsAppComponent]
 })
 export class ContactsModule {
 
+}
+
+// Needs to be an exported function for AOT to work
+export function doConfirm() {
+  return window.confirm('Navigate away without saving?');
 }

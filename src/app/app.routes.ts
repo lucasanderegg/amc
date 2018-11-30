@@ -9,7 +9,7 @@ export const APP_ROUTES = [
     { path: 'about', component: AboutComponent },
     { path: '', component: ContactsDashboardComponent, children: [
         { path: 'contact/:id', component: ContactsDetailViewComponent},
-        { path: 'contact/:id/edit', component: ContactsEditorComponent },
+        { path: 'contact/:id/edit', component: ContactsEditorComponent, canDeactivate: ['ConfirmNavigationGuard'] },
         { path: '', redirectTo: 'contact/0', pathMatch: 'full' },
     ] }
 ]
