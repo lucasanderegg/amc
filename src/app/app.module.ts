@@ -46,6 +46,6 @@ export class ContactsModule {
 }
 
 // Needs to be an exported function for AOT to work
-export function doConfirm() {
-  return window.confirm('Navigate away without saving?');
+export function doConfirm(component) {
+  return !component.warnOnClosing || window.confirm('Navigate away without saving?'); 
 }

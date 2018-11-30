@@ -11,7 +11,8 @@ import { EventBusService } from '../services/event-bus.service';
 })
 export class ContactsEditorComponent implements OnInit {
   contact: Contact = <Contact>{ address: {}};
-  
+  warnOnClosing = true;
+
   constructor(private contactsService: ContactsService, private route: ActivatedRoute,
     private router: Router, private eventBus: EventBusService) { }
 
@@ -25,7 +26,11 @@ export class ContactsEditorComponent implements OnInit {
 
   save(contact){
     this.contactsService.updateContact(contact)
-    .toPromise().then(ok => this.cancel(contact));
+    .toPromise().then(ok => {
+      this.warnOnClosing = false;
+      this.cancel(contact);
+    }
+      );
   }
   
   cancel(contact){
