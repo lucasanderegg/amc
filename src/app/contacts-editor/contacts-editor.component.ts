@@ -19,7 +19,7 @@ export class ContactsEditorComponent implements OnInit {
     let id = this.route.snapshot.params['id'];
     this.contactsService.getContact(id).toPromise().then( item => {
       this.contact = item;
-      this.eventBus.emit('appTitleChange', this.contact.name);
+      this.eventBus.emit('appTitleChange', `Editing:  ${this.contact.name}`);
     })
   }
 

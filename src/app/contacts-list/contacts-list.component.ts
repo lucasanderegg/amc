@@ -3,6 +3,7 @@ import { Contact } from '../models/contact';
 import { ContactsService } from '../services/contacts.service';
 import { Observable, Subject, merge } from 'rxjs';
 import { distinctUntilChanged, debounceTime, switchMap, map, takeUntil } from 'rxjs/operators';
+import { EventBusService } from '../services/event-bus.service';
 
 @Component({
   selector: 'trm-contacts-list',
@@ -13,9 +14,11 @@ export class ContactsListComponent implements OnInit {
   contacts: Observable<Array<Contact>> = {} as Observable<Array<Contact>>;
   terms$ = new Subject<string>();
 
-  constructor(private contactsService: ContactsService) { }
+  constructor(private contactsService: ContactsService, private eventBus: EventBusService) { }
 
   public ngOnInit(){
+    this.eventBus.emit('appTitleChange', 'Contacts'); 
+    
     // pipe returns the return value of the last method/function
     // because switchmap is like a map and mapps data and returns the data 
     // we have searchResult as Observable of Contacts
