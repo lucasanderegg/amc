@@ -20,11 +20,11 @@ import { TabsComponent } from './tabs/tabs/tabs.component';
 import { EventBusService } from './services/event-bus.service';
 import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashboard.component';
 import { AboutComponent } from './about/about.component';
-import { ConfirmDeactivationDialogComponent } from './confirm-deactivation-dialog/confirm-deactivation-dialog.component';
+import { ContactsResolver } from './shared/contacts.resolver';
 
 
 @NgModule({
-  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailComponent, ContactsEditorComponent, ContactsDetailViewComponent, TabComponent, TabsComponent, ContactsDashboardComponent, AboutComponent, ConfirmDeactivationDialogComponent],
+  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailComponent, ContactsEditorComponent, ContactsDetailViewComponent, TabComponent, TabsComponent, ContactsDashboardComponent, AboutComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -38,7 +38,9 @@ import { ConfirmDeactivationDialogComponent } from './confirm-deactivation-dialo
     ContactsService,
     {provide: API_ENDPOINT, useValue: 'http://localhost:4201/api/'},
     EventBusService,
-    { provide: 'ConfirmNavigationGuard', useValue: doConfirm }
+    ContactsResolver
+    { provide: 'ConfirmNavigationGuard', useValue: doConfirm },
+    // { provide: 'ContactsResolver', useValue: ContactsResolver },
   ],
   bootstrap: [ContactsAppComponent]
 })

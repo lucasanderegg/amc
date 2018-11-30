@@ -19,13 +19,13 @@ export class ContactsDetailViewComponent implements OnInit {
     private contactsService: ContactsService, private eventBus: EventBusService) { }
 
   ngOnInit() {
-    this.contact$ = this.route.params.pipe(
-      switchMap((params: Params) => this.contactsService.getContact(params['id'])),
-      tap(contact => {
-        if (contact != null && contact.name != null)
-          this.eventBus.emit('appTitleChange', contact.name)
-      })
-    );
+    this.contact$ = this.route.data
+      .pipe(
+        map(data => data['contact']),
+        tap(contact => {
+          if (contact != null && contact.name != null)
+            this.eventBus.emit('appTitleChange', contact.name)
+        }));
   }
 
   navigateToEditor(contact: Contact) {
